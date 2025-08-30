@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Details Scraper</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>URL Details Scraper</h1>
+            <p>Enter any URL to extract and display webpage details</p>
+        </header>
+
+        <div class="scrape-form">
+            <form id="scrapeForm">
+                <div class="input-group">
+                    <label for="urlInput">Website URL</label>
+                    <input 
+                        type="url" 
+                        id="urlInput" 
+                        placeholder="https://example.com" 
+                        required
+                    >
+                    <button type="submit" id="scrapeBtn">
+                        <span id="btnText">Scrape Details</span>
+                        <div id="loader" class="loader hidden"></div>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div id="errorMessage" class="error-message hidden"></div>
+        <div id="successMessage" class="success-message hidden"></div>
+
+        <div id="results" class="results-container">
+            <!-- Scraped webpage details will be displayed here -->
+        </div>
+
+        <div id="historySection" class="history-section hidden">
+            <h2>Recent Scrapes</h2>
+            <div id="historyContainer">
+                <!-- Recent scrapes will be displayed here -->
+            </div>
+            <button id="clearHistory" class="clear-btn">Clear History</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
