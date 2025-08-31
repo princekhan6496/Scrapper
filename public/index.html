@@ -3,51 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>URL Details Scraper</title>
+    <title>WebScrape Pro - Advanced URL Analysis</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <header class="header">
-            <h1>URL Details Scraper</h1>
-            <p>Enter any URL to extract and display webpage details</p>
-        </header>
+    <div class="app">
+        <!-- Background Elements -->
+        <div class="bg-elements">
+            <div class="bg-circle bg-circle-1"></div>
+            <div class="bg-circle bg-circle-2"></div>
+            <div class="bg-circle bg-circle-3"></div>
+        </div>
 
-        <div class="scrape-form">
-            <form id="scrapeForm">
-                <div class="input-group">
-                    <label for="urlInput">Website URL</label>
-                    <input 
-                        type="url" 
-                        id="urlInput" 
-                        placeholder="https://example.com" 
-                        required
-                    >
-                    <button type="submit" id="scrapeBtn">
-                        <span id="btnText">Scrape Details</span>
-                        <div id="loader" class="loader hidden"></div>
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-brand">
+                    <i class="fas fa-spider"></i>
+                    <span>WebScrape Pro</span>
+                </div>
+                <div class="nav-stats">
+                    <div class="stat-item">
+                        <span class="stat-number" id="totalScrapes">0</span>
+                        <span class="stat-label">Total Scrapes</span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
+            <!-- Hero Section -->
+            <header class="hero">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        <span class="gradient-text">Advanced URL Analysis</span>
+                        <span class="hero-subtitle">Extract comprehensive webpage details with precision</span>
+                    </h1>
+                    <p class="hero-description">
+                        Powered by intelligent scraping technology to analyze any webpage and extract valuable insights including meta data, images, links, and content structure.
+                    </p>
+                </div>
+                <div class="hero-visual">
+                    <div class="floating-card">
+                        <div class="card-header">
+                            <div class="card-dots">
+                                <span></span><span></span><span></span>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="code-line"></div>
+                            <div class="code-line short"></div>
+                            <div class="code-line"></div>
+                            <div class="code-line medium"></div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Scrape Form -->
+            <div class="scrape-section">
+                <div class="scrape-card">
+                    <div class="card-header-section">
+                        <h2><i class="fas fa-link"></i> URL Analysis</h2>
+                        <p>Enter any URL to begin comprehensive analysis</p>
+                    </div>
+                    
+                    <form id="scrapeForm" class="scrape-form">
+                        <div class="input-container">
+                            <div class="input-wrapper">
+                                <i class="fas fa-globe input-icon"></i>
+                                <input 
+                                    type="url" 
+                                    id="urlInput" 
+                                    placeholder="https://example.com" 
+                                    required
+                                    autocomplete="url"
+                                >
+                                <div class="input-border"></div>
+                            </div>
+                            <button type="submit" id="scrapeBtn" class="scrape-btn">
+                                <span id="btnText">
+                                    <i class="fas fa-search"></i>
+                                    Analyze URL
+                                </span>
+                                <div id="loader" class="btn-loader hidden">
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                </div>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Messages -->
+            <div id="errorMessage" class="message error-message hidden">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span class="message-text"></span>
+            </div>
+            <div id="successMessage" class="message success-message hidden">
+                <i class="fas fa-check-circle"></i>
+                <span class="message-text"></span>
+            </div>
+
+            <!-- Results -->
+            <div id="results" class="results-container">
+                <!-- Scraped webpage details will be displayed here -->
+            </div>
+
+            <!-- History -->
+            <div id="historySection" class="history-section hidden">
+                <div class="section-header">
+                    <h2><i class="fas fa-history"></i> Analysis History</h2>
+                    <button id="clearHistory" class="clear-btn">
+                        <i class="fas fa-trash"></i>
+                        Clear History
                     </button>
                 </div>
-            </form>
-        </div>
-
-        <div id="errorMessage" class="error-message hidden"></div>
-        <div id="successMessage" class="success-message hidden"></div>
-
-        <div id="results" class="results-container">
-            <!-- Scraped webpage details will be displayed here -->
-        </div>
-
-        <div id="historySection" class="history-section hidden">
-            <h2>Recent Scrapes</h2>
-            <div id="historyContainer">
-                <!-- Recent scrapes will be displayed here -->
+                <div id="historyContainer" class="history-container">
+                    <!-- Recent scrapes will be displayed here -->
+                </div>
             </div>
-            <button id="clearHistory" class="clear-btn">Clear History</button>
         </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p>&copy; 2025 WebScrape Pro. Advanced URL analysis made simple.</p>
+            </div>
+        </footer>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
