@@ -128,7 +128,7 @@ class URLScraper {
         this.resultsContainer.classList.add('fade-in');
         
         // Add download button event listener
-        const downloadBtn = document.getElementById('downloadPdf');
+       const downloadBtn = this.resultsContainer.querySelector('.download-btn');
         if (downloadBtn) {
             downloadBtn.addEventListener('click', () => this.downloadPDF(data, downloadBtn));
         }
