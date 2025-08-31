@@ -130,7 +130,7 @@ class URLScraper {
         // Add download button event listener
         const downloadBtn = document.getElementById('downloadPdf');
         if (downloadBtn) {
-            downloadBtn.addEventListener('click', () => this.downloadPDF(data));
+            downloadBtn.addEventListener('click', () => this.downloadPDF(data, downloadBtn));
         }
         
         // Scroll to results with smooth animation
@@ -142,7 +142,7 @@ class URLScraper {
         }, 100);
     }
 
-    createWebpageDetailsHTML(data) {
+    createWebpageDetailsHTML(data, containerId = 'webpageDetails') {
         // Create meta tags section
         const metaTagsHTML = Object.entries(data.metaTags)
             .filter(([key, value]) => value && value.length > 0)
@@ -204,7 +204,7 @@ class URLScraper {
         const scrapeDate = new Date(data.scrapedAt).toLocaleString();
 
         return `
-            <div class="webpage-details" id="webpageDetails">
+            <div class="webpage-details" id="${containerId}">
                 <div class="webpage-header">
                     <h2 class="webpage-title">${this.escapeHtml(data.title)}</h2>
                     <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
@@ -213,7 +213,7 @@ class URLScraper {
                     </div>
                     <p class="webpage-description">${this.escapeHtml(data.description)}</p>
                     <div class="webpage-actions">
-                        <button id="downloadPdf" class="download-btn">
+                        <button class="download-btn">
                             <i class="fas fa-download"></i>
                             Download PDF Report
                         </button>
@@ -294,18 +294,21 @@ class URLScraper {
         `;
     }
 
-    async downloadPDF(data) {
+    async downloadPDF(data, buttonElement) {
         if (!this.currentScrapedData) {
             this.showError('No data available for download');
             return;
         }
 
+        let originalContent = '';
+        
         try {
             // Show loading state
-            const downloadBtn = document.getElementById('downloadPdf');
-            const originalContent = downloadBtn.innerHTML;
-            downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating PDF...';
-            downloadBtn.disabled = true;
+            if (buttonElement) {
+                originalContent = buttonElement.innerHTML;
+                buttonElement.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating PDF...';
+                buttonElement.disabled = true;
+            }
 
             // Create PDF using jsPDF
             const { jsPDF } = window.jspdf;
@@ -430,10 +433,9 @@ class URLScraper {
             this.showError('Failed to generate PDF report');
         } finally {
             // Restore button state
-            const downloadBtn = document.getElementById('downloadPdf');
-            if (downloadBtn) {
-                downloadBtn.innerHTML = originalContent;
-                downloadBtn.disabled = false;
+            if (buttonElement && originalContent) {
+                buttonElement.innerHTML = originalContent;
+                buttonElement.disabled = false;
             }
         }
     }
@@ -484,16 +486,16 @@ class URLScraper {
         }
 
         const historyHTML = historyResults
-            .map((result) => this.createWebpageDetailsHTML(result))
+            .map((result, index) => this.createWebpageDetailsHTML(result, `historyItem${index}`))
             .join('');
 
         this.historyContainer.innerHTML = historyHTML;
 
         // Add event listeners for download buttons in history
-        historyResults.forEach((result, index) => {
-            const downloadBtn = document.getElementById(`downloadPdf`);
+        const downloadBtns = this.historyContainer.querySelectorAll('.download-btn');
+        downloadBtns.forEach((downloadBtn, index) => {
             if (downloadBtn) {
-                downloadBtn.addEventListener('click', () => this.downloadPDF(result));
+                downloadBtn.addEventListener('click', () => this.downloadPDF(historyResults[index], downloadBtn));
             }
         });
     }
