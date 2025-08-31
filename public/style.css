@@ -201,7 +201,7 @@ body {
 }
 
 .gradient-text {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #000000 0%, #933ee8 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -218,9 +218,11 @@ body {
 
 .hero-description {
     font-size: 1.1rem;
-    color: var(--text-muted);
+    color: rgb(39, 39, 39);
     line-height: 1.7;
     max-width: 500px;
+    opacity: 0.6;
+   font-weight: 700;
 }
 
 .hero-visual {
